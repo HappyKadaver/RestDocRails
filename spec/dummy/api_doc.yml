@@ -1,0 +1,244 @@
+---
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/)
+    or HTML.
+  version: 0.1.9
+security:
+- JWT: []
+components:
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+paths:
+  "/owners":
+    get:
+      description: owners index
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+    post:
+      description: owners create
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+  "/owners/new":
+    get:
+      description: owners new
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+  "/owners/1/edit":
+    get:
+      description: owners edit
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+  "/owners/1":
+    get:
+      description: owners show
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+    patch:
+      description: owners update
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+    put:
+      description: owners update
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+    delete:
+      description: owners destroy
+      responses:
+        '200':
+          description: success
+          content:
+            text/plain: {}
+  "/pets":
+    get:
+      description: |
+        returns a list of all pets
+        that are stored in the database
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      description: name of pet
+                      pattern: "[\\w\\d]+"
+                    age:
+                      type: integer
+                      description: Age of Pet
+                      minimum: 0
+                      maximum: 20
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+          description: json array of pets
+    post:
+      description: pets create
+      responses:
+        '200':
+          description: success
+          content:
+            application/json: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pet:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      description: name of pet
+                      pattern: "[\\w\\d]+"
+                    age:
+                      type: integer
+                      description: Age of Pet
+                      minimum: 0
+                      maximum: 20
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+  "/pets/new":
+    get:
+      description: pets new
+      responses:
+        '423':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                        description: name of pet
+                        pattern: "[\\w\\d]+"
+                      age:
+                        type: integer
+                        description: Age of Pet
+                        minimum: 0
+                        maximum: 20
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                  other_stuff:
+                    type: object
+                    properties:
+                      page:
+                        type: string
+                      some_more:
+                        type: string
+          description: json object containing pet and pagination data
+  "/pets/1/edit":
+    get:
+      description: pets edit
+      responses:
+        '200':
+          description: success
+          content:
+            application/json: {}
+  "/pets/1":
+    get:
+      description: pets show
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    description: name of pet
+                    pattern: "[\\w\\d]+"
+                  age:
+                    type: integer
+                    description: Age of Pet
+                    minimum: 0
+                    maximum: 20
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+          description: json object representing the pet
+    patch:
+      description: pets update
+      responses:
+        '200':
+          description: success
+          content:
+            application/json: {}
+    put:
+      description: pets update
+      responses:
+        '200':
+          description: success
+          content:
+            application/json: {}
+    delete:
+      description: pets destroy
+      responses:
+        '200':
+          description: success
+          content:
+            application/json: {}
+  "/":
+    get:
+      description: welcome index
+      responses:
+        '200':
+          description: success
+          content:
+            text/html: {}

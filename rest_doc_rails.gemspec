@@ -29,4 +29,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "mongoid"
+  spec.add_development_dependency "bson_ext"
 end

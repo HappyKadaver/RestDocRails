@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: rest_doc_rails_development
+      hosts:
+        - localhost:27017
+
+test:
+  clients:
+    default:
+      database: rest_doc_rails_test
+      hosts:
+        - localhost:27017
