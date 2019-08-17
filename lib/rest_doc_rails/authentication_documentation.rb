@@ -5,10 +5,10 @@ module RestDocRails
       @doc_action_authentication ||= superclass.try(:doc_action_authentication) || {}
     end
 
-    def doc_add_action_authentication(action, authentication_name)
-      throw "There is no Authentication with the name #{authentication_name}!" if doc_action_authentication[authentication_name]
+    def doc_add_action_authentication(action, authentication_name=nil)
+      throw "There is no Authentication with the name #{authentication_name}!" if authentication_name && doc_action_authentication[authentication_name]
       doc_action_authentication[action] ||= []
-      doc_action_authentication[action] << { authentication_name => [] }
+      doc_action_authentication[action] << { authentication_name => [] } if authentication_name
     end
 
     def doc_authentication_methods

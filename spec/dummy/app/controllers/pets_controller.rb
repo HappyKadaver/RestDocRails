@@ -4,6 +4,7 @@ class PetsController < ApplicationController
 
   doc_path_param :all, :id, 1, "Id of Pet"
 
+  self.doc_add_action_authentication :index
   doc :index, <<~DOC
   returns a list of all pets
   that are stored in the database

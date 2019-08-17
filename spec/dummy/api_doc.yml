@@ -6,13 +6,23 @@ info:
     or HTML.
   version: 0.1.9
 security:
-- JWT: []
+- json_web_token: []
 components:
   securitySchemes:
-    JWT:
+    basic_auth:
+      type: http
+      scheme: basic
+    json_web_token:
       type: http
       scheme: bearer
       bearerFormat: jwt
+    api_key:
+      type: apiKey
+      in: header
+      name: API_KEY_HEADER
+    open_id:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
 paths:
   "/owners":
     get:
@@ -29,6 +39,7 @@ paths:
           description: success
           content:
             text/plain: {}
+      security: []
     post:
       description: owners create
       parameters:
@@ -175,6 +186,7 @@ paths:
                       type: string
                       format: date-time
           description: json array of pets
+      security: []
     post:
       description: pets create
       parameters:
