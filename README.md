@@ -16,6 +16,9 @@ $ bundle
 ```
 
 ## Usage
+
+Call `rake rest_doc_rails:documentation` to generate documentation.
+
 ### Documenting your controller endpoints
 
 ```ruby
