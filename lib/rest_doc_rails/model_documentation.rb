@@ -11,7 +11,7 @@ module RestDocRails
       # end
       attr_accessor :attribute_doc
 
-      def doc_attribute(attribute, description, skip_validators_attributes: false, skip_validators_description: false)
+      def doc_attribute(attribute, description, skip_validators_attributes: false)
         self.attribute_doc ||= model_attribute_documentation
         self.attribute_doc[attribute][:description] = description
 
