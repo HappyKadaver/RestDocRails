@@ -2,12 +2,14 @@ class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
   self.doc_default_response_types = [:json]
 
+  doc_path_param :all, :id, 1, "Id of Pet"
+
   doc :index, <<~DOC
   returns a list of all pets
   that are stored in the database
   DOC
   doc_response :index, 200, doc_array_of(doc_model_response_body), "json array of pets"
-  doc_query_param :index, :page, "Page number for pagination"
+  doc_query_param :index, :page, false, 1, "Page number for pagination"
   # GET /pets
   def index
     @pets = Pet.all

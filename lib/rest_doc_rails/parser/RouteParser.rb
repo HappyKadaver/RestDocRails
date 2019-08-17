@@ -25,7 +25,11 @@ module RestDocRails
 
         routes.each do |route|
           verb = route.verb.downcase.to_sym
-          path = route.format({id: 1})
+          route_parts = route.parts - [:format]
+          format_hash = route_parts.map do |v|
+            [v.to_sym, "{#{v}}"]
+          end.to_h
+          path = CGI.unescape route.format(format_hash)
           controller = route.defaults[:controller]
 
           next if controller.nil?
@@ -37,7 +41,7 @@ module RestDocRails
           formats = []
 
 
-          result << Route.new(verb, path, controller, action, formats)
+          result << Route.new(verb, path, controller, action, formats, route_parts)
         end
 
         result

@@ -2,6 +2,7 @@ class OwnersController < ApplicationController
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   self.doc_default_response_types = [:plain]
+  doc_path_param :all, :id, 1, "Id of Owner"
 
   # GET /owners
   def index

@@ -1,5 +1,5 @@
 module RestDocRails
-  class Route < Struct.new(:verb, :path, :controller, :action, :formats)
+  class Route < Struct.new(:verb, :path, :controller, :action, :formats, :route_parts)
     # attr_reader :verb
     # attr_reader :path
     # attr_reader :controller

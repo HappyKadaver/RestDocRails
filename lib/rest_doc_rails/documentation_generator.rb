@@ -110,6 +110,14 @@ module RestDocRails
       action_doc = route.controller.try(:doc_action) || {}
       response_doc = route.controller.try(:doc_action_response) || {}
       request_doc = route.controller.try(:doc_action_request) || {}
+      params = route.controller.try(:doc_action_parameters) || {}
+      params = params[:all]&.union(params[route.action] || []) || params[route.action] || []
+
+      path_param_names = params.select{|v| v[:in] == :path}.map{|v| v[:name]}
+
+      route.route_parts.each do |v|
+        Rails.logger.warn "you didn't document the path paramter for #{route.controller}##{route.action} parameter: #{v}" unless path_param_names&.include? v
+      end
 
       action_authentication = route.controller.try(:doc_action_authentication)
       authentications = action_authentication[route.action] if action_authentication
@@ -118,6 +126,7 @@ module RestDocRails
       @openapi[:paths][route.path] ||= {}
       @openapi[:paths][route.path][route.verb] ||= {}
       @openapi[:paths][route.path][route.verb][:description] = action_doc[route.action] || "#{route.controller.controller_name} #{route.action.to_s}"
+      @openapi[:paths][route.path][route.verb][:parameters] = params unless params.empty?
       @openapi[:paths][route.path][route.verb][:responses] = response_doc[route.action] || default_response(route.controller.try :doc_default_response_types)
       @openapi[:paths][route.path][route.verb][:requestBody] = request_doc[route.action] if request_doc[route.action]
       @openapi[:paths][route.path][route.verb][:security] = authentications if authentications

@@ -23,7 +23,7 @@ module RestDocRails
       attr_accessor :doc_action
       attr_accessor :doc_action_response
       attr_accessor :doc_action_request
-      attr_accessor :doc_action_query_param
+      attr_accessor :doc_action_parameters
 
       def doc_default_response_types
         @doc_default_response_types ||= superclass.try(:doc_default_response_types) || [:html]
@@ -74,14 +74,25 @@ module RestDocRails
         end
       end
 
-      def doc_query_param(action, query_param, description)
-        self.doc_action_query_param ||= {}
-        self.doc_action_query_param[action] ||= {
-            query_param => {
-              in: :query,
-              name: query_param,
-              description: description
-            }
+      def doc_query_param(action, param_name, required, schema, description)
+        open_api_schema = to_open_api_hash schema
+        doc_param action, {
+            in: :query,
+            name: param_name,
+            required: required,
+            description: description,
+            schema: open_api_schema
+        }
+      end
+
+      def doc_path_param(action, param_name, schema, description)
+        open_api_schema = to_open_api_hash schema
+        doc_param action, {
+            in: :path,
+            required: true,
+            name: param_name,
+            description: description,
+            schema: open_api_schema
         }
       end
 
@@ -105,6 +116,12 @@ module RestDocRails
       private
       def model_class
         controller_name.classify.safe_constantize
+      end
+
+      def doc_param(action, open_api_hash)
+        self.doc_action_parameters ||= {}
+        self.doc_action_parameters[action] ||= []
+        self.doc_action_parameters[action] << open_api_hash
       end
 
       def model_attribute_documentation(model=model_class)
